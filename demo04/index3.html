@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Components1</title>
+    <style>
+        .tab-button {
+            padding: 6px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-bottom: -1px;
+            margin-right: -1px;
+        }
+
+        .tab-button:hover {
+            background: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background: #e0e0e0;
+        }
+
+        .tab {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button
+            v-for="tab of tabs"
+            :key="tab"
+            :class="['tab-button', { active: tab === currentTab }]"
+            @click="currentTab = tab"
+    >{{ tab }}</button>
+    <component
+            :is="'tab-'+ currentTab.toLowerCase()"
+            class="tab"
+    ></component>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('tab-one', {
+        template: `<div>I am tab one.</div>`
+    });
+    Vue.component('tab-two', {
+        template: `<div>I am tab two.</div>`
+    });
+    Vue.component('tab-three', {
+        template: `<div>I am tab three.</div>`
+    });
+    const app = new Vue({
+        el: '#app',
+        data: {
+            tabs: ['One', 'Two', 'Three'],
+            currentTab: 'One'
+        }
+    });
+</script>
+</body>
+</html>

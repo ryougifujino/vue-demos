@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Components Basics</title>
+</head>
+<body>
+
+<div id="app">
+    <blog-post
+            v-for="post of posts"
+            :key="post.id"
+            :post="post"
+            :font-size-scale-parent="fontSizeScaleParent"
+            @reduce-text="fontSizeScaleParent -= $event"
+            @reduce-text-func="onReduceText"
+    ></blog-post>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('blog-post', {
+        props: ['post', 'fontSizeScaleParent'],
+        data: function () {
+            return {
+                fontSizeScale: 1
+            };
+        },
+        template: `
+            <div :style="{ fontSize: fontSizeScale * fontSizeScaleParent + 'em' }">
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.content }}</p>
+                <button @click="fontSizeScale += 0.1">Enlarge Text</button>
+                <button @click="$emit('reduce-text', 0.1)">Reduce Text</button>
+                <button @click="$emit('reduce-text-func', 0.1)">Reduce Text</button>
+            </div>`
+    });
+    const app = new Vue({
+        el: '#app',
+        data: {
+            fontSizeScaleParent: 1,
+            posts: [
+                {
+                    id: 1,
+                    title: 'One',
+                    content: 'All in one.'
+                },
+                {
+                    id: 2,
+                    title: 'Two',
+                    content: 'Two is not enough.'
+                },
+                {
+                    id: 3,
+                    title: 'Three',
+                    content: 'Three is enough.'
+                }
+            ]
+        },
+        methods:{
+            onReduceText: function (increment) {
+                this.fontSizeScaleParent -= increment;
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

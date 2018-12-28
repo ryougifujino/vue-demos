@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model on Components</title>
+</head>
+<body>
+<div id="app">
+    <custom-input v-model="message"></custom-input>
+    <custom-input
+            @input="message = $event"
+            :value="message"
+    ></custom-input>
+</div>
+<!--
+    1. $emit('input', $event.target.value) -> @input="message = $event";
+       Emit event from origin input to custom-input and give value to message
+    2. :value="message"
+    3. :value="value"
+    4. Because <input v-model="searchText"> <=>
+       <input
+           v-on:input="searchText = $event.target.value"
+           v-bind:value="searchText">
+       So <custom-input v-model="searchText"></custom-input> <=>
+       <custom-input
+           v-on:input="searchText = $event"
+           v-bind:value="searchText"></custom-input>
+-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('custom-input', {
+        props: ['value'],
+        template: `
+            <input
+                :value="value"
+                @input="$emit('input', $event.target.value)"> `
+    });
+    const app = new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        }
+    });
+</script>
+</body>
+</html>
