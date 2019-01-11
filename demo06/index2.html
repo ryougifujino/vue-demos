@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binding Native Events to Components</title>
+</head>
+<body>
+
+<!-- A $listeners property containing an object of listeners being used on the component. -->
+<div id="app">
+    <base-input @custom-event="foo"></base-input>
+    <base-input2 @focus="foo"></base-input2>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('base-input', {
+        template: `
+            <label>
+                base-input
+                <input @click="$listeners['custom-event']">
+            </label>
+          `
+    });
+    // $listeners['custom-event'] <=> foo
+
+    Vue.component('base-input2', {
+        template: `
+            <label>
+                base-input2
+                <input v-on="$listeners">
+            </label>
+            `
+    });
+    // $listeners only contains listeners defined on base-input2 (here only -> { focus: foo })
+    // <input v-on="$listeners"> <=> <input @focus="foo">
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            fooString: 'foo string'
+        },
+        methods: {
+            foo() {
+                console.log(this.fooString)
+            }
+        }
+    })
+</script>
+</body>
+</html>
