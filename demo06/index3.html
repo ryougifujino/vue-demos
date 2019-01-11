@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>.sync Modifier</title>
+</head>
+<body>
+<div id="app">
+    {{text}}
+    <text-changer :text.sync="text"></text-changer>
+    <text-changer :text="text" @update:text="text = $event"></text-changer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('text-changer', {
+        props: ['text'],
+        template: `
+            <button @click="changeText">{{text}}</button>
+        `,
+        methods: {
+            changeText() {
+                this.$emit('update:text', '233')
+            }
+        }
+    });
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            text: ''
+        }
+    });
+</script>
+</body>
+</html>
