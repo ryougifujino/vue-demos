@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Replacing Template Features with Plain JavaScript # v-model</title>
+</head>
+<body>
+<div id="app">
+    <custom-input v-model="message"></custom-input>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('custom-input', {
+        props: ['value'],
+        render: function (createElement) {
+            let self = this;
+            return createElement('input', {
+                on: {
+                    'input': function (event) {
+                        self.$emit('input', event.target.value)
+                    }
+                },
+                domProps: {
+                    value: self.value   // <=> :value="value"
+                }
+            });
+        }
+    });
+    const app = new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        }
+    });
+</script>
+</body>
+</html>
