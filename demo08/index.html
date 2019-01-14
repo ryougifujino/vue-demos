@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Directives</title>
+</head>
+<body>
+<div id="app">
+    <input v-focus>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.directive('focus', {
+        inserted: function (el) {
+            el.focus();
+        }
+    });
+
+    const app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>
