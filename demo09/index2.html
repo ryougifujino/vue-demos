@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>createElement Arguments</title>
+</head>
+<body>
+<div id="app">
+    <anchored-heading :level="1">Hello world!</anchored-heading>
+    <anchored-heading :level="2">Hello world!</anchored-heading>
+    <anchored-heading :level="3">Hello world!</anchored-heading>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    const getChildTextContent = children =>
+        children.map(node =>
+            node.children ? getChildTextContent(node.children) : node.text).join('');
+
+    Vue.component('anchored-heading', {
+        render: function (createElement) {
+
+            let headingId = getChildTextContent(this.$slots.default)
+                .toLowerCase()
+                .replace(/\W+/, '-')
+                .replace(/(^-|-$)/, '');
+
+            return createElement(
+                'h' + this.level,
+                [   // array for positioning itself to the third argument
+                    createElement('a', {
+                        attrs: {
+                            name: headingId,
+                            href: '#' + headingId
+                        }
+                    }, this.$slots.default)
+                ]
+            );
+        },
+        props: {
+            level: {
+                type: Number,
+                required: true
+            }
+        }
+    });
+
+    const app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>
