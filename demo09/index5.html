@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functional Components</title>
+</head>
+<body>
+<div id="app">
+    <function-component>
+        <span style="color: red;">I am red.</span>
+    </function-component>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('function-component', {
+        functional: true,
+        render(h, context) {
+            context.children.map(node => {
+                node.tag = 'a';
+                return node;
+            });
+            return h('div', context.children);
+        }
+    });
+
+    const app = new Vue({
+        el: "#app"
+    });
+</script>
+</body>
+</html>
