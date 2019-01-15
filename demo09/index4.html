@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Replacing Template Features with Plain JavaScript # Slots</title>
+</head>
+<body>
+<div id="app">
+    <message-printer :message="'Hallo!'">
+        <template slot-scope="{ content }">
+            {{ content }}
+        </template>
+    </message-printer>
+
+    <billboard :message="'Hallo~'"></billboard>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    Vue.component('message-printer', {
+        props: ['message'],
+        render(h) {
+            return h('span', [
+                this.$scopedSlots.default({
+                    content: this.message
+                })
+            ]);
+        }
+    });
+
+    Vue.component('billboard', {
+        props: ['message'],
+        render(h) {
+            return h('message-printer', {
+                props: {
+                    message: this.message
+                },
+                scopedSlots: {                          //
+                    default: function (props) {         //      <h1 slot-scope="props">
+                        return h('h1', props.content);  // =>       {{ props.content }}
+                    }                                   //      </h1>
+                }                                       //
+            });
+        }
+    });
+    const app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>
