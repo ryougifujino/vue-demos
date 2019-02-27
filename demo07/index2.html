@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Named Slot(2.6-)</title>
+    <title>Named Slot(2.6+)</title>
 </head>
 <body>
 <div id="app">
     <stage>
         Normal
-        <template slot="news">Good</template>
-        <div slot="headline">Wonderful</div>
-        <!-- Note that v-slot can only be added to a <template> -->
+        <template v-slot:headline>Wonderful</template>
+        <template v-slot:news>Good</template>
     </stage>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>

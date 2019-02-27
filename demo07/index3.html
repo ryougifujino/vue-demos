@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoped Slots(2.6-)</title>
+</head>
+<body>
+<div id="app">
+    <todo-list :todos="todos">
+        <template slot-scope="slotProps">
+            {{slotProps.todo.title}}
+            <span v-if="slotProps.todo.isCompleted">√</span>
+        </template>
+    </todo-list>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>
+<script>
+    Vue.component('todo-list', {
+        props: ['todos'],
+        template: `
+            <ul>
+                <li v-for="todo of todos">
+                    <slot :todo="todo"></slot>
+                </li>
+            </ul>
+        `
+    });
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            todos: [
+                {
+                    title: 'Read a Book',
+                    isCompleted: false
+                },
+                {
+                    title: 'Play Games',
+                    isCompleted: true
+                },
+                {
+                    title: 'Watch TV',
+                    isCompleted: false
+                }
+            ]
+        }
+    });
+</script>
+</body>
+</html>
