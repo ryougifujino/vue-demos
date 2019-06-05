@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transitioning Single Elements/Components</title>
+    <style>
+        /* vue transition style */
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+
+        /* traditional transition style */
+        .world {
+            transition: opacity .5s;
+        }
+
+        .hide {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="show = !show">Toggle</button>
+
+    <!-- vue transition style -->
+    <transition name="fade">
+        <div v-if="show">hello</div>
+    </transition>
+
+    <!-- traditional transition style -->
+    <div :class="['world', {'hide': !show}]">world</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            show: true
+        }
+    });
+</script>
+</body>
+</html>
