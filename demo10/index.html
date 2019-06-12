@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Transitioning Single Elements/Components</title>
+    <title>Transitioning Single Elements/Components # CSS Transitions</title>
     <style>
         /* vue transition style */
         .fade-enter-active, .fade-leave-active {
@@ -34,6 +34,52 @@
 
     <!-- traditional transition style -->
     <div :class="['world', {'hide': !show}]">world</div>
+    <pre style="position: fixed; top: 100px;">
+
+ Timeline
+
+    |
+    |    +--------+--------------------+         +--------+--------------------+
+    |    |        |  v-enter           |         |        |  v-leave           |
+    |    |  Add   |                    |         |  Add   |                    |
+    |    |        |  v-enter-active    |         |        |  v-leave-active    |
+    |    +--------+--------------------+         +--------+--------------------+
+    |
+    |    +-----------------------------+         +-----------------------------+
+    |    |                             |         |                             |
+    |    | Before element was inserted |         | Before element was removed  |
+    |    |                             |         |                             |
+    |    +-----------------------------+         +-----------------------------+
+    |
+    |    +-----------------------------+         +-----------------------------+
+    |    |                             |         |                             |
+    |    | First frame of transition   |         | First frame of transition   |
+    |    |                             |         |                             |
+    |    +-----------------------------+         +-----------------------------+
+    |
+    |    +--------+--------------------+         +--------+--------------------+
+    |    | Remove | v-enter            |         | Remove | v-leave            |
+    |    -------------------------------         -------------------------------
+    |    |  Add   | v-enter-to         |         |  Add   | v-leave-to         |
+    |    +--------+--------------------+         +--------+--------------------+
+    |
+    |                             Middle transition......
+    |
+    |    +-----------------------------+         +-----------------------------+
+    |    |                             |         |                             |
+    |    | Last frame of transition    |         | Last frame of transition    |
+    |    |                             |         |                             |
+    |    +-----------------------------+         +-----------------------------+
+    |
+    |    +--------+--------------------+         +--------+--------------------+
+    |    |        |  v-enter-active    |         |        |  v-leave-active    |
+    |    | Remove |                    |         | Remove |                    |
+    |    |        |  v-enter-to        |         |        |  v-leave-to        |
+    |    +--------+--------------------+         +--------+--------------------+
+    |
+    |
+    v
+    </pre>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 <script>
