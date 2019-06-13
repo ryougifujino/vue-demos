@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transitioning Between Elements</title>
+    <style>
+        .v-enter-active, .v-leave-active {
+            transition: opacity .5s;
+        }
+
+        .v-enter, .v-leave-to {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <transition>
+        <button v-if="isEditing" @click="isEditing = !isEditing" key="save">
+            Save
+        </button>
+        <button v-else @click="isEditing = !isEditing" key="edit">
+            Edit
+        </button>
+    </transition>
+
+    <!-- equals to -->
+    <transition>
+        <button @click="isEditing = !isEditing" :key="isEditing">
+            {{isEditing ? 'Save' : 'Edit'}}
+        </button>
+    </transition>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            isEditing: true
+        }
+    });
+</script>
+</body>
+</html>
