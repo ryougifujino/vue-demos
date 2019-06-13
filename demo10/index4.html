@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transitions on Initial Render</title>
+    <style>
+        .fade-enter {
+            background-color: red;
+        }
+
+        .fade-enter-active {
+            transition: background-color .5s;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- By default, this will use the transitions specified for entering and leaving. -->
+    <transition name="fade" appear>
+        <div>hello</div>
+    </transition>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    new Vue({el: '#app'});
+</script>
+</body>
+</html>
