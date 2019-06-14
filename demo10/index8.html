@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Transitions # List Move Transitions</title>
+    <style>
+        .list-item {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .list-enter-active, .list-leave-active {
+            transition: all 1s;
+        }
+
+        .list-enter, .list-leave-to {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* 解决当添加和移除元素的时候，周围的元素会瞬间移动到他们的新布局的位置，而不是平滑的过渡的问题 */
+
+        .list-move {
+            transition: transform 1s;
+        }
+
+        /* 因为元素会在过渡结束时才被删除，在过渡过程中一直占据文档流导致后面的元素无法移动，最后造成生硬的效果，*/
+        /* 所以要先把要过渡的元素移出文档流。*/
+        .list-leave-active {
+            position: absolute;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="add">Add</button>
+    <button @click="remove">Remove</button>
+    <transition-group name="list" tag="p">
+        <span v-for="item of items" :key="item" class="list-item">
+            {{item}}
+        </span>
+    </transition-group>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            nextNum: 10
+        },
+        methods: {
+            randomIndex() {
+                return Math.floor(this.items.length * Math.random());
+            },
+            add() {
+                this.items.splice(this.randomIndex(), 0, this.nextNum++);
+            },
+            remove() {
+                this.items.splice(this.randomIndex(), 1);
+            }
+        }
+    });
+</script>
+</body>
+</html>
